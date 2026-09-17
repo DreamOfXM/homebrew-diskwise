@@ -45,6 +45,22 @@ brew style --cask Casks/diskwise.rb
 
 ## Status
 
-The cask loads and audits from this tap. End-to-end `brew install` has to be re-verified on a
-network that allows HEAD requests to GitHub release assets — it was written and checked where
-those requests were blocked.
+End-to-end verified on 2026-09-17 on an Apple Silicon Mac:
+
+```console
+$ brew install --cask dreamofxm/diskwise/diskwise
+🍺  diskwise was successfully installed!
+```
+
+Homebrew downloaded the release DMG, accepted the pinned SHA-256, and moved `DiskWise.app` to
+`/Applications` (bundle version 1.2). Gatekeeper was then inspected rather than assumed:
+
+| Check | Result |
+|-------|--------|
+| `xattr /Applications/DiskWise.app` | `com.apple.quarantine` present |
+| `spctl --assess --type execute` | `rejected` |
+| `codesign -dv` | `Signature=adhoc`, `TeamIdentifier=not set` |
+
+So installing through Homebrew does **not** bypass the first-launch confirmation — which is why
+the cask ships the `caveats` block. This changes when Developer ID signing and notarization land
+in the app itself, not in this tap.
