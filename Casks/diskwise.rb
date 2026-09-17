@@ -20,6 +20,9 @@ cask "diskwise" do
 
   app "DiskWise.app"
 
+  caveats "DiskWise is ad-hoc signed and not notarized by Apple, so Gatekeeper may ask you " \
+          "to confirm once on first launch. Notarization is on the project roadmap."
+
   uninstall quit: "com.dreamofxm.diskcleaner"
 
   zap trash: [

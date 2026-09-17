@@ -1,35 +1,50 @@
 # Homebrew tap for DiskWise
 
+One-command install (fully-qualified, so Homebrew trusts just this cask):
+
+```sh
+brew install --cask dreamofxm/diskwise/diskwise
+```
+
+Or tap once and use the short name — since Homebrew 6, third-party taps are untrusted by
+default, so the `brew trust` step is required:
+
 ```sh
 brew tap DreamOfXM/diskwise
+brew trust --cask dreamofxm/diskwise/diskwise
 brew install --cask diskwise
 ```
 
-[DiskWise](https://github.com/DreamOfXM/diskwise) is a free, open-source macOS disk
-cleaner: every removal goes to the Trash and stays undoable, no telemetry, no daemon,
-no network access.
+[DiskWise](https://github.com/DreamOfXM/diskwise) is a free, open-source macOS disk cleaner:
+every removal goes to the Trash and stays undoable, no telemetry, no daemon, no network access.
 
-## Why a tap instead of official homebrew-cask
+## Why a personal tap instead of official homebrew-cask
 
-The published build is ad-hoc signed and not notarized by Apple, which is the one
-thing official `homebrew-cask` will not accept today. Once Developer ID signing and
-notarization ship, the plan is to submit upstream and retire this tap.
+The published build is ad-hoc signed and not notarized. Official `homebrew-cask` won't take a
+cask that needs a Gatekeeper workaround, and its acceptance policy also asks for existing
+notability (forks / watchers / stars well above what this project has today). Once Developer ID
+signing and notarization ship, the intent is to submit upstream and retire this tap.
 
-## What `brew install` does about Gatekeeper
+Trust policy: <https://docs.brew.sh/Tap-Trust> ·
+Acceptable casks: <https://docs.brew.sh/Acceptable-Casks> ·
+Acceptance policy: <https://docs.brew.sh/Package-Acceptance-Policy>
 
-Homebrew fetches the DMG without the `com.apple.quarantine` attribute, so an app
-installed through this tap launches normally — the right-click → Open dance described
-in the main README is only needed when you download the `.dmg` from Releases in a
-browser.
+## Bumping the version
 
-## Keeping the cask current
-
-`Casks/diskwise.rb` pins a version and a SHA-256. To bump it:
+`Casks/diskwise.rb` pins a version and a SHA-256, and the DMG filename drops the patch number
+(`v1.2.0` → `DiskWise-1.2.dmg`). To bump:
 
 ```sh
-brew bump --open-pr diskwise        # or, manually:
-shasum -a 256 DiskWise-<version>.dmg
+shasum -a 256 DiskWise-<version>.dmg          # from the release asset, not a local rebuild
+# edit version + sha256 in Casks/diskwise.rb, then:
+brew audit --cask --strict --online dreamofxm/diskwise/diskwise
+brew style --cask Casks/diskwise.rb
 ```
 
-Update `version`, `sha256`, and run `brew audit --cask --strict diskwise --tap=DreamOfXM/diskwise`
-before pushing.
+`brew bump --open-pr diskwise` can open the PR once this tap is public on GitHub.
+
+## Status
+
+The cask loads and audits from this tap. End-to-end `brew install` has to be re-verified on a
+network that allows HEAD requests to GitHub release assets — it was written and checked where
+those requests were blocked.
