@@ -2,8 +2,7 @@ cask "diskwise" do
   version "1.2.0"
   sha256 "1b355b8855199fd3af1fa6994dee89a4d04ba977e35732b3db7624053fb8b6b4"
 
-  url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version.sub(/\.0$/, "")}.dmg",
-      verified: "github.com/DreamOfXM/diskwise/"
+  url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version.sub(/\.0$/, "")}.dmg"
   name "DiskWise"
   desc "Open-source macOS disk cleaner that only ever moves files to the Trash"
   homepage "https://github.com/DreamOfXM/diskwise"
@@ -16,7 +15,7 @@ cask "diskwise" do
   # Universal (Intel + arm64) builds are on the roadmap; the published DMG is
   # arm64-only until Developer ID signing lands.
   depends_on arch: :arm64
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "DiskWise.app"
 
