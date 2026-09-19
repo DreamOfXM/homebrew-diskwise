@@ -31,11 +31,12 @@ Acceptance policy: <https://docs.brew.sh/Package-Acceptance-Policy>
 
 ## Bumping the version
 
-`Casks/diskwise.rb` pins a version and a SHA-256, and the DMG filename drops the patch number
-(`v1.2.0` → `DiskWise-1.2.dmg`). To bump:
+`Casks/diskwise.rb` pins a version and a SHA-256, and the asset name follows the release tag
+plus the architecture it was built for: tag `v1.2.0` shipped `DiskWise-1.2.dmg` (arm64 only),
+tag `v1.3` ships `DiskWise-1.3-universal.dmg`. To bump:
 
 ```sh
-shasum -a 256 DiskWise-<version>.dmg          # from the release asset, not a local rebuild
+shasum -a 256 DiskWise-<version>-universal.dmg   # from the release asset, not a local rebuild
 # edit version + sha256 in Casks/diskwise.rb, then:
 brew audit --cask --strict --online dreamofxm/diskwise/diskwise
 brew style --cask Casks/diskwise.rb

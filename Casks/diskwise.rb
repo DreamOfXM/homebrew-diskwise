@@ -1,10 +1,10 @@
 cask "diskwise" do
-  version "1.2.0"
-  sha256 "1b355b8855199fd3af1fa6994dee89a4d04ba977e35732b3db7624053fb8b6b4"
+  version "1.3"
+  sha256 "a4d048a77cf84b07b23eee66458634e625d710aa4f8f19b78590832d2119da42"
 
-  url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version.sub(/\.0$/, "")}.dmg"
+  url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version}-universal.dmg"
   name "DiskWise"
-  desc "Open-source macOS disk cleaner that only ever moves files to the Trash"
+  desc "Open-source disk cleaner that only ever moves files to the Trash"
   homepage "https://github.com/DreamOfXM/diskwise"
 
   livecheck do
@@ -12,21 +12,22 @@ cask "diskwise" do
     strategy :github_latest
   end
 
-  # Universal (Intel + arm64) builds are on the roadmap; the published DMG is
-  # arm64-only until Developer ID signing lands.
-  depends_on arch: :arm64
+  # From v1.3 the published DMG is a universal binary (arm64 + x86_64), so there is
+  # no architecture to pin here.
   depends_on macos: :ventura
 
   app "DiskWise.app"
 
-  caveats "DiskWise is ad-hoc signed and not notarized by Apple, so Gatekeeper may ask you " \
-          "to confirm once on first launch. Notarization is on the project roadmap."
-
   uninstall quit: "com.dreamofxm.diskcleaner"
 
   zap trash: [
-    "~/Library/Preferences/com.dreamofxm.diskcleaner.plist",
     "~/Library/Caches/com.dreamofxm.diskcleaner",
+    "~/Library/Preferences/com.dreamofxm.diskcleaner.plist",
     "~/Library/Saved Application State/com.dreamofxm.diskcleaner.savedState",
   ]
+
+  caveats "DiskWise is ad-hoc signed and not notarized by Apple, so the first launch gets " \
+          "blocked: approve it in System Settings -> Privacy & Security -> Open Anyway. " \
+          "(On macOS 13-14, right-click -> Open works instead.) Installing through Homebrew " \
+          "does not skip that step: the cask fetches the very file the Releases page offers."
 end
