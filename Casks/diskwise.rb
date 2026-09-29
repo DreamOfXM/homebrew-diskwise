@@ -1,6 +1,6 @@
 cask "diskwise" do
-  version "1.5"
-  sha256 "6cd3882bccdfbbe84248f57ade9f21c7e750d6f39c7161eebef0b335d5041fb1"
+  version "1.6"
+  sha256 "f623a0118f1560340749acc3714a4e3b430cde29be022d388df8f6d9730f11bb"
 
   url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version}-universal.dmg"
   name "DiskWise"
