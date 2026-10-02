@@ -1,6 +1,6 @@
 cask "diskwise" do
-  version "1.6"
-  sha256 "f623a0118f1560340749acc3714a4e3b430cde29be022d388df8f6d9730f11bb"
+  version "1.7"
+  sha256 "fdd764de5b583d30cda475d93270017c98fc51a779d346cfa6551eb37eff1fcf"
 
   url "https://github.com/DreamOfXM/diskwise/releases/download/v#{version}/DiskWise-#{version}-universal.dmg"
   name "DiskWise"
@@ -25,9 +25,4 @@ cask "diskwise" do
     "~/Library/Preferences/com.dreamofxm.diskcleaner.plist",
     "~/Library/Saved Application State/com.dreamofxm.diskcleaner.savedState",
   ]
-
-  caveats "DiskWise is ad-hoc signed and not notarized by Apple, so the first launch gets " \
-          "blocked: approve it in System Settings -> Privacy & Security -> Open Anyway. " \
-          "(On macOS 13-14, right-click -> Open works instead.) Installing through Homebrew " \
-          "does not skip that step: the cask fetches the very file the Releases page offers."
 end
